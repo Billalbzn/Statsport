@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="ca24207e05c94ffe9434dd4a8b3b87c5" Name="Diagram1">
+        <EntityTypeShape EntityType="Database1Model.Joueurs" Width="1.5" PointX="0.75" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Database1Model.Rotation" Width="1.5" PointX="6.625" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Database1Model.Armes" Width="1.5" PointX="2.25" PointY="4.875" />
+        <EntityTypeShape EntityType="Database1Model.Stats" Width="1.5" PointX="0.5" PointY="3.875" />
+        <AssociationConnector Association="Database1Model.FK_Database1Entities" />
+        <EntityTypeShape EntityType="Database1Model.StatsTwentyDays" Width="1.5" PointX="2.75" PointY="0.625" />
+        <AssociationConnector Association="Database1Model.FK1_Database1Entities" />
+        <EntityTypeShape EntityType="Database1Model.Leaderboard" Width="1.5" PointX="9.875" PointY="0.625" />
+        <EntityTypeShape EntityType="Database1Model.Map" Width="1.5" PointX="8.75" PointY="3.125" />
+        <AssociationConnector Association="Database1Model.FK2_Database1Entities" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

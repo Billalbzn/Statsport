@@ -1,0 +1,381 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Database1Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Armes">
+          <Key>
+            <PropertyRef Name="Name" />
+          </Key>
+          <Property Name="Name" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Price" Type="money" Nullable="false" />
+          <Property Name="Pickrate" Type="float" Nullable="false" />
+          <Property Name="Ammo" Type="int" Nullable="false" />
+          <Property Name="Magazine" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Joueurs">
+          <Key>
+            <PropertyRef Name="SteamId" />
+          </Key>
+          <Property Name="SteamId" Type="int" Nullable="false" />
+          <Property Name="Username" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="PeakRank" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Hours" Type="time" Precision="7" Nullable="false" />
+          <Property Name="Level" Type="int" Nullable="false" />
+          <Property Name="KDA" Type="float" Nullable="false" />
+          <Property Name="NbPlayedGames" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Leaderboard">
+          <Key>
+            <PropertyRef Name="SteamId" />
+          </Key>
+          <Property Name="SteamId" Type="int" Nullable="false" />
+          <Property Name="Ranknumber" Type="int" Nullable="false" />
+          <Property Name="Win" Type="int" Nullable="false" />
+          <Property Name="Loss" Type="int" Nullable="false" />
+          <Property Name="Winrate" Type="float" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Map">
+          <Key>
+            <PropertyRef Name="Name" />
+          </Key>
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="WinrateCT" Type="float" Nullable="false" />
+          <Property Name="WinrateT" Type="float" Nullable="false" />
+          <Property Name="Banrate" Type="float" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Rotation">
+          <Key>
+            <PropertyRef Name="Name" />
+          </Key>
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Stats">
+          <Key>
+            <PropertyRef Name="Id_Joueurs" />
+          </Key>
+          <Property Name="Id_Joueurs" Type="int" Nullable="false" />
+          <Property Name="Looserate" Type="float" Nullable="false" />
+          <Property Name="Winrate" Type="float" Nullable="false" />
+          <Property Name="HSrate" Type="float" Nullable="false" />
+          <Property Name="Avghit" Type="float" Nullable="false" />
+          <Property Name="GameNumber" Type="int" Nullable="false" />
+          <Property Name="Rank" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="StatsTwentyDays">
+          <Key>
+            <PropertyRef Name="Id_Joueurs" />
+          </Key>
+          <Property Name="Id_Joueurs" Type="int" Nullable="false" />
+          <Property Name="Looserate" Type="float" Nullable="false" />
+          <Property Name="Winrate" Type="float" Nullable="false" />
+          <Property Name="HSrate" Type="float" Nullable="false" />
+          <Property Name="Avghit" Type="float" Nullable="false" />
+          <Property Name="GameNumber" Type="int" Nullable="false" />
+          <Property Name="Rank" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_Database1Entities">
+          <End Role="Joueurs" Type="Self.Joueurs" Multiplicity="1" />
+          <End Role="Stats" Type="Self.Stats" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Joueurs">
+              <PropertyRef Name="SteamId" />
+            </Principal>
+            <Dependent Role="Stats">
+              <PropertyRef Name="Id_Joueurs" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK1_Database1Entities">
+          <End Role="Joueurs" Type="Self.Joueurs" Multiplicity="1" />
+          <End Role="StatsTwentyDays" Type="Self.StatsTwentyDays" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Joueurs">
+              <PropertyRef Name="SteamId" />
+            </Principal>
+            <Dependent Role="StatsTwentyDays">
+              <PropertyRef Name="Id_Joueurs" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK2_Database1Entities">
+          <End Role="Rotation" Type="Self.Rotation" Multiplicity="1" />
+          <End Role="Map" Type="Self.Map" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Rotation">
+              <PropertyRef Name="Name" />
+            </Principal>
+            <Dependent Role="Map">
+              <PropertyRef Name="Name" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Database1ModelStoreContainer">
+          <EntitySet Name="Armes" EntityType="Self.Armes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Joueurs" EntityType="Self.Joueurs" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Leaderboard" EntityType="Self.Leaderboard" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Map" EntityType="Self.Map" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Rotation" EntityType="Self.Rotation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Stats" EntityType="Self.Stats" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StatsTwentyDays" EntityType="Self.StatsTwentyDays" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Database1Entities" Association="Self.FK_Database1Entities">
+            <End Role="Joueurs" EntitySet="Joueurs" />
+            <End Role="Stats" EntitySet="Stats" />
+          </AssociationSet>
+          <AssociationSet Name="FK1_Database1Entities" Association="Self.FK1_Database1Entities">
+            <End Role="Joueurs" EntitySet="Joueurs" />
+            <End Role="StatsTwentyDays" EntitySet="StatsTwentyDays" />
+          </AssociationSet>
+          <AssociationSet Name="FK2_Database1Entities" Association="Self.FK2_Database1Entities">
+            <End Role="Rotation" EntitySet="Rotation" />
+            <End Role="Map" EntitySet="Map" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Database1Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Joueurs">
+          <Key>
+            <PropertyRef Name="SteamId" />
+          </Key>
+          <Property Name="SteamId" Type="Int32" Nullable="false" />
+          <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PeakRank" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Hours" Type="Time" Nullable="false" Precision="7" />
+          <Property Name="Level" Type="Int32" Nullable="false" />
+          <Property Name="KDA" Type="Double" Nullable="false" />
+          <Property Name="NbPlayedGames" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Stats" Relationship="Database1Model.FK_Database1Entities" FromRole="Joueurs" ToRole="Stats" />
+          <NavigationProperty Name="StatsTwentyDays" Relationship="Database1Model.FK1_Database1Entities" FromRole="Joueurs" ToRole="StatsTwentyDays" />
+        </EntityType>
+        <EntityType Name="Rotation">
+          <Key>
+            <PropertyRef Name="Name" />
+          </Key>
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Map" Relationship="Database1Model.FK2_Database1Entities" FromRole="Rotation" ToRole="Map" />
+        </EntityType>
+        <EntityContainer Name="Database1Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Joueurs" EntityType="Self.Joueurs" />
+          <EntitySet Name="Rotation" EntityType="Self.Rotation" />
+          <EntitySet Name="Armes" EntityType="Database1Model.Armes" />
+          <EntitySet Name="Stats" EntityType="Database1Model.Stats" />
+          <AssociationSet Name="FK_Database1Entities" Association="Database1Model.FK_Database1Entities">
+            <End Role="Joueurs" EntitySet="Joueurs" />
+            <End Role="Stats" EntitySet="Stats" />
+          </AssociationSet>
+          <EntitySet Name="StatsTwentyDays" EntityType="Database1Model.StatsTwentyDays" />
+          <AssociationSet Name="FK1_Database1Entities" Association="Database1Model.FK1_Database1Entities">
+            <End Role="Joueurs" EntitySet="Joueurs" />
+            <End Role="StatsTwentyDays" EntitySet="StatsTwentyDays" />
+          </AssociationSet>
+          <EntitySet Name="Leaderboard" EntityType="Database1Model.Leaderboard" />
+          <EntitySet Name="Map" EntityType="Database1Model.Map" />
+          <AssociationSet Name="FK2_Database1Entities" Association="Database1Model.FK2_Database1Entities">
+            <End Role="Rotation" EntitySet="Rotation" />
+            <End Role="Map" EntitySet="Map" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Armes">
+          <Key>
+            <PropertyRef Name="Name" />
+          </Key>
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Price" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="Pickrate" Type="Double" Nullable="false" />
+          <Property Name="Ammo" Type="Int32" Nullable="false" />
+          <Property Name="Magazine" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Stats">
+          <Key>
+            <PropertyRef Name="Id_Joueurs" />
+          </Key>
+          <Property Name="Id_Joueurs" Type="Int32" Nullable="false" />
+          <Property Name="Looserate" Type="Double" Nullable="false" />
+          <Property Name="Winrate" Type="Double" Nullable="false" />
+          <Property Name="HSrate" Type="Double" Nullable="false" />
+          <Property Name="Avghit" Type="Double" Nullable="false" />
+          <Property Name="GameNumber" Type="Int32" Nullable="false" />
+          <Property Name="Rank" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Joueurs" Relationship="Database1Model.FK_Database1Entities" FromRole="Stats" ToRole="Joueurs" />
+        </EntityType>
+        <Association Name="FK_Database1Entities">
+          <End Type="Database1Model.Joueurs" Role="Joueurs" Multiplicity="1" />
+          <End Type="Database1Model.Stats" Role="Stats" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Joueurs">
+              <PropertyRef Name="SteamId" />
+            </Principal>
+            <Dependent Role="Stats">
+              <PropertyRef Name="Id_Joueurs" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="StatsTwentyDays">
+          <Key>
+            <PropertyRef Name="Id_Joueurs" />
+          </Key>
+          <Property Name="Id_Joueurs" Type="Int32" Nullable="false" />
+          <Property Name="Looserate" Type="Double" Nullable="false" />
+          <Property Name="Winrate" Type="Double" Nullable="false" />
+          <Property Name="HSrate" Type="Double" Nullable="false" />
+          <Property Name="Avghit" Type="Double" Nullable="false" />
+          <Property Name="GameNumber" Type="Int32" Nullable="false" />
+          <Property Name="Rank" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Joueurs" Relationship="Database1Model.FK1_Database1Entities" FromRole="StatsTwentyDays" ToRole="Joueurs" />
+        </EntityType>
+        <Association Name="FK1_Database1Entities">
+          <End Type="Database1Model.Joueurs" Role="Joueurs" Multiplicity="1" />
+          <End Type="Database1Model.StatsTwentyDays" Role="StatsTwentyDays" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Joueurs">
+              <PropertyRef Name="SteamId" />
+            </Principal>
+            <Dependent Role="StatsTwentyDays">
+              <PropertyRef Name="Id_Joueurs" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Leaderboard">
+          <Key>
+            <PropertyRef Name="SteamId" />
+          </Key>
+          <Property Name="SteamId" Type="Int32" Nullable="false" />
+          <Property Name="Ranknumber" Type="Int32" Nullable="false" />
+          <Property Name="Win" Type="Int32" Nullable="false" />
+          <Property Name="Loss" Type="Int32" Nullable="false" />
+          <Property Name="Winrate" Type="Double" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Map">
+          <Key>
+            <PropertyRef Name="Name" />
+          </Key>
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="WinrateCT" Type="Double" Nullable="false" />
+          <Property Name="WinrateT" Type="Double" Nullable="false" />
+          <Property Name="Banrate" Type="Double" Nullable="false" />
+          <NavigationProperty Name="Rotation" Relationship="Database1Model.FK2_Database1Entities" FromRole="Map" ToRole="Rotation" />
+        </EntityType>
+        <Association Name="FK2_Database1Entities">
+          <End Type="Database1Model.Rotation" Role="Rotation" Multiplicity="1" />
+          <End Type="Database1Model.Map" Role="Map" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Rotation">
+              <PropertyRef Name="Name" />
+            </Principal>
+            <Dependent Role="Map">
+              <PropertyRef Name="Name" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Database1ModelStoreContainer" CdmEntityContainer="Database1Entities">
+          <EntitySetMapping Name="Joueurs">
+            <EntityTypeMapping TypeName="Database1Model.Joueurs">
+              <MappingFragment StoreEntitySet="Joueurs">
+                <ScalarProperty Name="SteamId" ColumnName="SteamId" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="PeakRank" ColumnName="PeakRank" />
+                <ScalarProperty Name="Hours" ColumnName="Hours" />
+                <ScalarProperty Name="Level" ColumnName="Level" />
+                <ScalarProperty Name="KDA" ColumnName="KDA" />
+                <ScalarProperty Name="NbPlayedGames" ColumnName="NbPlayedGames" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Rotation">
+            <EntityTypeMapping TypeName="Database1Model.Rotation">
+              <MappingFragment StoreEntitySet="Rotation">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Armes">
+            <EntityTypeMapping TypeName="Database1Model.Armes">
+              <MappingFragment StoreEntitySet="Armes">
+                <ScalarProperty Name="Magazine" ColumnName="Magazine" />
+                <ScalarProperty Name="Ammo" ColumnName="Ammo" />
+                <ScalarProperty Name="Pickrate" ColumnName="Pickrate" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Stats">
+            <EntityTypeMapping TypeName="Database1Model.Stats">
+              <MappingFragment StoreEntitySet="Stats">
+                <ScalarProperty Name="Rank" ColumnName="Rank" />
+                <ScalarProperty Name="GameNumber" ColumnName="GameNumber" />
+                <ScalarProperty Name="Avghit" ColumnName="Avghit" />
+                <ScalarProperty Name="HSrate" ColumnName="HSrate" />
+                <ScalarProperty Name="Winrate" ColumnName="Winrate" />
+                <ScalarProperty Name="Looserate" ColumnName="Looserate" />
+                <ScalarProperty Name="Id_Joueurs" ColumnName="Id_Joueurs" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StatsTwentyDays">
+            <EntityTypeMapping TypeName="Database1Model.StatsTwentyDays">
+              <MappingFragment StoreEntitySet="StatsTwentyDays">
+                <ScalarProperty Name="Rank" ColumnName="Rank" />
+                <ScalarProperty Name="GameNumber" ColumnName="GameNumber" />
+                <ScalarProperty Name="Avghit" ColumnName="Avghit" />
+                <ScalarProperty Name="HSrate" ColumnName="HSrate" />
+                <ScalarProperty Name="Winrate" ColumnName="Winrate" />
+                <ScalarProperty Name="Looserate" ColumnName="Looserate" />
+                <ScalarProperty Name="Id_Joueurs" ColumnName="Id_Joueurs" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Leaderboard">
+            <EntityTypeMapping TypeName="Database1Model.Leaderboard">
+              <MappingFragment StoreEntitySet="Leaderboard">
+                <ScalarProperty Name="Winrate" ColumnName="Winrate" />
+                <ScalarProperty Name="Loss" ColumnName="Loss" />
+                <ScalarProperty Name="Win" ColumnName="Win" />
+                <ScalarProperty Name="Ranknumber" ColumnName="Ranknumber" />
+                <ScalarProperty Name="SteamId" ColumnName="SteamId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Map">
+            <EntityTypeMapping TypeName="Database1Model.Map">
+              <MappingFragment StoreEntitySet="Map">
+                <ScalarProperty Name="Banrate" ColumnName="Banrate" />
+                <ScalarProperty Name="WinrateT" ColumnName="WinrateT" />
+                <ScalarProperty Name="WinrateCT" ColumnName="WinrateCT" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Aucun" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
